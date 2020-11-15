@@ -1,7 +1,7 @@
 # Личный проект «Типотека» [![Build status][travis-image]][travis-url]
 
 * Студент: [Александр Демченко](https://up.htmlacademy.ru/nodejs/3/user/1068207).
-* Наставник: `Неизвестно`.
+* Наставник: [Ruslan Malogulko](https://up.htmlacademy.ru/nodejs/3/user/9728).
 
 ---
 
