@@ -65,7 +65,6 @@ module.exports = {
     const categories = await readFile(`./data/categories.txt`);
     const sentences = await readFile(`./data/sentences.txt`);
 
-    console.log(titles);
     const content = JSON.stringify(generatePublications(countOffer, titles, categories, sentences));
 
     try {
