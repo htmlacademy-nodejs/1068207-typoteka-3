@@ -18,7 +18,6 @@ const sendResponse = (res, statusCode, message) => {
       <body>${message}</body>
     </html>`.trim();
 
-  res.statusCode = statusCode;
   res.writeHead(statusCode, {
     'Content-Type': `text/html; charset=UTF-8`,
   });
