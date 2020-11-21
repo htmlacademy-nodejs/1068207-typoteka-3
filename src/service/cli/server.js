@@ -6,7 +6,7 @@ const fs = require(`fs`).promises;
 
 const PORT = 3000;
 const MOCK_FILE = `mocks.json`;
-const {HttpCode} = require(`../utils/_constants`);
+const {HttpCode, ExitCode} = require(`../utils/_constants`);
 
 const sendResponse = (res, statusCode, message) => {
   const template = `
@@ -44,7 +44,8 @@ const handleClientConntection = async (req, res) => {
 
 const handleServerConnection = (error, port) => {
   if (error) {
-    return console.error(chalk.red(`Ошибка при создании сервера, ${error}`));
+    console.error(chalk.red(`Ошибка при создании сервера, ${error}`));
+    process.exit(ExitCode.error);
   }
 
   return console.info(chalk.green(`Ожидаю соединений на ${port}`));
