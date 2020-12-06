@@ -99,6 +99,11 @@ const callError = (errorMessage) => {
   return process.exit(ExitCode.error);
 };
 
+const setMocks = async (app) => {
+  const mocks = await readFile(`./mocks.json`);
+  app.set(`mocks`, mocks);
+};
+
 module.exports = {
   shuffle,
   getRandomInt,
@@ -106,5 +111,6 @@ module.exports = {
   readFile,
   generatePublications,
   callError,
-  getRandomDate
+  getRandomDate,
+  setMocks
 };

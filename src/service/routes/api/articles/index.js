@@ -16,7 +16,8 @@ articlesRouter.get(`/articles`, (req, res) => {
     return res.status(HttpCode.NOT_FOUND).send([]);
   }
 
-  return res.send(JSON.stringify(mocks));
+
+  return res.status(HttpCode.OK).set(`Content-type`, `application/json`).send(JSON.stringify(mocks));
 });
 
 // возвращает полную информацию о публикации;
@@ -67,10 +68,21 @@ articlesRouter.post(`/articles`, [
 });
 
 // редактирует определённую публикацию;
-articlesRouter.put(`/articles/:articleId`, (req, res) => {
+articlesRouter.put(`/articles/:articleId`, [
+  body(`title`).isLength({min: 1}),
+  body(`categories`).isArray().isLength({min: 1}),
+  body(`fullText`).isArray().isLength({min: 1}),
+  body(`announce`).isArray().isLength({min: 1}),
+  body(`picture`).isLength({min: 1})
+], (req, res) => {
   const mocks = req.app.get(`mocks`);
   const {articleId} = req.params;
   const newData = req.body;
+  const errors = validationResult(req);
+
+  if (!errors.isEmpty()) {
+    return res.status(HttpCode.BAD_REQUEST).send(`Что-то пошло не так, проверьте правильность заполнения полей.`);
+  }
 
   const findedPublication = mocks.findIndex((publication) => publication.id === articleId);
 
@@ -78,16 +90,11 @@ articlesRouter.put(`/articles/:articleId`, (req, res) => {
     return res.status(HttpCode.NOT_FOUND).send({});
   }
 
-  const updatedPublication = {
-    ...mocks[findedPublication],
-    ...newData
-  };
-
-  mocks[findedPublication] = updatedPublication;
+  mocks[findedPublication] = {id: mocks[findedPublication].id, newData};
 
   req.app.set(`mocks`, mocks);
 
-  return res.send(updatedPublication);
+  return res.send(newData);
 
 });
 
@@ -105,7 +112,7 @@ articlesRouter.delete(`/articles/:articleId`, (req, res) => {
 
   req.app.set(`mocks`, newData);
 
-  return res.send(`Публикация ${articleId} удалена`);
+  return res.send(mocks[findedPublication]);
 });
 
 // возвращает список комментариев определённой публикации;
@@ -141,6 +148,8 @@ articlesRouter.delete(`/articles/:articleId/comments/:commentId`, (req, res) => 
     return res.status(HttpCode.NOT_FOUND).send(`Can not find comments with id ${commentId}`);
   }
 
+  const deletedComment = mocks[findedPublication].comments.filter((comment) => comment.id === commentId)[0];
+
   const updatedPublication = {
     ...mocks[findedPublication],
     comments: mocks[findedPublication].comments.filter((comment) => comment.id !== commentId)
@@ -150,7 +159,7 @@ articlesRouter.delete(`/articles/:articleId/comments/:commentId`, (req, res) => 
 
   req.app.set(`mocks`, mocks);
 
-  return res.send(`Комментарий ${commentId} удален`);
+  return res.send(deletedComment);
 });
 
 articlesRouter.post(`/articles/:articleId/comments`,

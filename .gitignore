@@ -9,6 +9,7 @@ Thumbs.db
 
 # Вспомогательные файлы
 *.log*
+logs/
 node_modules/
 
 # Папка с собранными файлами проекта
@@ -19,3 +20,6 @@ mocks.json
 
 # Rest-Client tests
 *.http
+
+# Конфигурация окружения
+.env

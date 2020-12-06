@@ -13,7 +13,7 @@ categoriesRouter.get(`/categories`, (req, res) => {
     return res.status(HttpCode.NOT_FOUND).send([]);
   }
 
-  return res.send(JSON.stringify(categories));
+  return res.status(HttpCode.OK).send(JSON.stringify(categories));
 });
 
 
