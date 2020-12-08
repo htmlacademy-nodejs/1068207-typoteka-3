@@ -7,14 +7,15 @@ const {describe, beforeAll, test, expect} = require(`@jest/globals`);
 const articlesRouter = require(`../articles`);
 const {HttpCode} = require(`../../../utils/_constants`);
 const {readFile} = require(`../../../utils/_utils.js`);
+const mocks = require(`../../../../../mocks.json`); // почему-то только так импортит. У меня всегда затыки с путями, почему не сработает ./mocks.json?
 
 
 const createAPI = async () => {
   const app = express();
+  const shallowCopiedMocks = [...mocks];
   app.use(express.json());
   app.use(`/api`, articlesRouter);
-  const mocks = await readFile(`./mocks.json`);
-  app.set(`mocks`, JSON.parse(mocks));
+  app.set(`mocks`, shallowCopiedMocks);
   return app;
 };
 
@@ -105,7 +106,7 @@ describe(`API creates new publication if its data is valid`, () => {
   test(`Publications count increased after newPublication is createad`, () => {
     return request(app)
       .get(`/api/articles`)
-      .expect((respond) => expect(JSON.parse(respond.res.text).length).toBe(6));
+      .expect((respond) => expect((JSON.parse(respond.res.text)).length).toBe(6));
   });
 });
 

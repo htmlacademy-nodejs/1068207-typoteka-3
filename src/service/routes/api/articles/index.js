@@ -159,7 +159,7 @@ articlesRouter.delete(`/articles/:articleId/comments/:commentId`, (req, res) => 
 
   req.app.set(`mocks`, mocks);
 
-  return res.send(deletedComment);
+  return res.send(JSON.stringify(deletedComment));
 });
 
 articlesRouter.post(`/articles/:articleId/comments`,
