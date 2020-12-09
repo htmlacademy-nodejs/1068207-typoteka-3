@@ -4,10 +4,13 @@
   "description": "Типотека",
   "main": "./src/service/service.js",
   "scripts": {
-    "test": "npm run eslint",
-    "eslint": "eslint --ext .js src/",
-    "start": "node ./src/service/service.js",
-    "server": "nodemon ./src/service/service.js --server",
+    "test": "npm run test::rest",
+    "eslint": "npm run eslint && npm run jest",
+    "jest": "jest",
+    "test::rest": "jest .e2e.test.js",
+    "start": "cross-env NODE_ENV=production node ./src/service/service.js",
+    "start::debug": "cross-env NODE_ENV=development node ./src/service/service.js",
+    "server": "nodemon ./src/service/service.js -- --server",
     "start-front-server": "nodemon ./src/express/index.js"
   },
   "repository": {
@@ -21,15 +24,20 @@
   },
   "homepage": "https://github.com/aldeimos/1068207-typoteka-3#readme",
   "devDependencies": {
+    "cross-env": "^7.0.3",
     "eslint": "7.13.0",
     "eslint-config-htmlacademy": "0.6.0",
-    "nodemon": "2.0.6"
+    "jest": "26.6.3",
+    "nodemon": "2.0.6",
+    "pino-pretty": "4.3.0",
+    "supertest": "6.0.1"
   },
   "dependencies": {
     "chalk": "4.1.0",
+    "dotenv": "^8.2.0",
     "express": "4.17.1",
     "express-validator": "^6.7.0",
     "nanoid": "^3.1.20",
-    "pug": "3.0.0"
+    "pino": "6.7.0"
   }
 }
