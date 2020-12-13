@@ -85,7 +85,7 @@ const generatePublications = (count, titles, categories, sentences, comments) =>
   Array(count).fill({}).map(() => ({
     id: nanoid(),
     title: titles[getRandomInt(0, titles.length - 1)],
-    createdDate: DATES[getRandomInt(0, DATES.length - 1)],
+    publicationDate: DATES[getRandomInt(0, DATES.length - 1)],
     categories: getRandomArrayLength(categories, 3),
     announce: getRandomArrayLength(sentences, MAX_ANNOUNCE_SENTENCES_COUNT),
     fullText: getRandomArrayLength(sentences),
