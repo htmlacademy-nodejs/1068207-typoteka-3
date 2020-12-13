@@ -5,7 +5,7 @@ block content
     section.modal.modal--flex
       .popup.popup--new-publication.popup--flex
         .new-publication
-          form(action='#' method='POST')
+          form(action='/articles/add' method='POST' enctype="multipart/form-data")
             .new-publication__header
               h1 Новая публикация
               .new-publication__date-form
@@ -13,7 +13,12 @@ block content
                 .new-publication__date-form-division
                   .new-publication__date-block
                     label(for='new-publication-date' aria-label='Календарь')
-                    input#new-publication-date(type='text' name='login' placeholder='21.03.2019')
+                    input#new-publication-date(
+                      type='text' 
+                      name='publicationDate' 
+                      value=`${publication.publicationDate}` 
+                      placeholder='Дата'
+                    )
               button.new-publication__button.button.button--colored(type='submit') Опубликовать
             button.popup__button.button.button--popup-close(type='button' aria-label='Закрыть окно')
               | Закрыть
@@ -22,20 +27,130 @@ block content
               .form__wrapper.form__wrapper--intro
                 .form__field
                   label
-                    input(type='text' placeholder='Заголовок' required='')
+                    input(
+                      type='text' 
+                      name="title" 
+                      value=`${publication.title}` 
+                      placeholder='Заголовок' 
+                      required=''
+                    )
                 .form__field.form__field--post-image
                   label
-                    input#image-name-field(type='text' placeholder='Фотография' readonly='')
+                    input#image-name-field(
+                      type='text' 
+                      value=`${publication.picture}`
+                      placeholder='Фотография' 
+                      readonly=''
+                    )
                   .form__image-loader.form__image-loader--publication
                     label
-                      input.visually-hidden(type='file')
+                      input.visually-hidden(type='file' name='picture')
                       | Обзор
-                a.new-publication__form-link.button.button--transparent(href='#') Добавить категорию
+                div.new-publication__category-wrapper
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                    input(
+                      type="checkbox" 
+                      name="categories[1]" 
+                      value="Деревья" 
+                      id="categories[1]" 
+                      checked= publication.categories.includes('Деревья')
+                    )
+                    <label for="categories[1]">Деревья</label>
+                  </div>
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                    input(
+                      type="checkbox" 
+                      name="categories[2]" 
+                      value="За жизнь" 
+                      id="categories[2]" 
+                      checked= publication.categories.includes('За жизнь')
+                    )
+                    <label for="categories[2]">За жизнь</label>
+                  </div>
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                    input(
+                      type="checkbox" 
+                      name="categories[3]" 
+                      value="Без рамки" 
+                      id="categories[3]" 
+                      checked= publication.categories.includes('Без рамки')
+                    )
+                    <label for="categories[3]">Без рамки</label>
+                  </div>
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                    input(
+                      type="checkbox" 
+                      name="categories[4]" 
+                      value="Разное" 
+                      id="categories[4]" 
+                      checked= publication.categories.includes('Разное')
+                    )
+                    <label for="categories[4]">Разное</label>
+                  </div>
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                    input(
+                      type="checkbox" 
+                      name="categories[5]" 
+                      value="IT" 
+                      id="categories[5]" 
+                      checked= publication.categories.includes('IT')
+                    )
+                    <label for="categories[5]">IT</label>
+                  </div>
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                    input( 
+                      type="checkbox" 
+                      name="categories[6]" 
+                      value="Музыка" 
+                      id="categories[6]" 
+                      checked= publication.categories.includes('Музыка')
+                    )
+                    <label for="categories[6]">Музыка</label>
+                  </div>
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                    input(
+                      type="checkbox" 
+                      name="categories[7]" 
+                      value="Кино" 
+                      id="categories[7]" 
+                      checked= publication.categories.includes('Кино')
+                    )
+                    <label for="categories[7]">Кино</label>
+                  </div>
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                    input(
+                      type="checkbox" 
+                      name="categories[8]" 
+                      value="Программирование" 
+                      id="categories[8]" 
+                      checked= publication.categories.includes('Программирование')
+                    )
+                    <label for="categories[8]">Программирование</label>
+                  </div> 
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                    input(
+                      type="checkbox" 
+                      name="categories[9]" 
+                      value="Железо" 
+                      id="categories[9]" 
+                      checked= publication.categories.includes('Железо')
+                    )
+                    <label for="categories[9]">Железо</label>
+                  </div>
+                  a.new-publication__form-link.button.button--transparent(href='#') Добавить категорию 
               .form__wrapper.form__wrapper--text
                 .form__field.form__field--publication-text
                   label
-                    textarea(rows='1' placeholder='Анонс публикации')
+                    textarea(
+                      rows='1' 
+                      name="announce" 
+                      placeholder='Анонс публикации'
+                    ) #{publication.announce}
                 .form__field.form__field--publication-text
                   label
-                    textarea(rows='1' placeholder='Полный текст публикации')
+                    textarea(
+                      rows='1' 
+                      name="fullText" 
+                      placeholder='Полный текст публикации'
+                    ) #{publication.fullText}
       .modal__overlay
