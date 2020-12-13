@@ -1,0 +1,47 @@
+extends general/layout
+
+block content
+  main
+    section.modal.modal--flex
+      .popup.popup--new-publication.popup--flex
+        .new-publication
+          form(action='#' method='POST')
+            .new-publication__header
+              h1 Новая публикация
+              .new-publication__date-form
+                h3 Дата публикации
+                .new-publication__date-form-division
+                  .new-publication__date-block
+                    label(for='new-publication-date' aria-label='Календарь')
+                    input#new-publication-date(type='text' name='login' value=`${publication.createdDate}` placeholder='')
+              button.new-publication__button.button.button--colored(type='submit') Опубликовать
+            button.popup__button.button.button--popup-close(type='button' aria-label='Закрыть окно')
+              | Закрыть
+              | окно
+            .new-publication__form.form
+              .form__wrapper.form__wrapper--intro
+                .form__field
+                  label
+                    input(type='text' placeholder='Заголовок' required='' value=`${publication.title}`)
+                .form__field.form__field--post-image
+                  label
+                    input#image-name-field(type='text' placeholder='Фотография' readonly='' value=`${publication.picture}`)
+                  .form__image-loader.form__image-loader--publication
+                    label
+                      input.visually-hidden(type='file')
+                      | Обзор
+                each category in publication.categories
+                  <div class="new-publication__checkbox new-publication__checkbox--auto">
+                      <input type="checkbox" name="checkbox-auto" id="checkbox-auto">
+                      <label for="checkbox-auto">#{category}</label>
+                  </div>
+                a.new-publication__form-link.button.button--transparent(href='#') Добавить категорию
+              .form__wrapper.form__wrapper--text
+                .form__field.form__field--publication-text
+                  label
+                    textarea(rows=`${publication.announce.length}` placeholder='Анонс публикации' value=`${publication.announce}`) #{publication.announce}
+                .form__field.form__field--publication-text
+                  label
+                    textarea(rows=`${publication.fullText.length}` placeholder='Полный текст публикации' value=`${publication.fullText}`) #{publication.fullText}
+      .modal__overlay
+

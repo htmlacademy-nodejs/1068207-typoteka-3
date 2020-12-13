@@ -40,7 +40,8 @@ articlesRouter.post(`/articles`, [
   body(`categories`).isArray().isLength({min: 1}),
   body(`fullText`).isArray().isLength({min: 1}),
   body(`announce`).isArray().isLength({min: 1}),
-  body(`picture`).isLength({min: 1})
+  body(`picture`).isLength({min: 1}),
+  body(`publicationDate`).isISO8601()
 ], (req, res) => {
   const mocks = req.app.get(`mocks`);
   const {title, categories, fullText, announce, picture} = req.body;
