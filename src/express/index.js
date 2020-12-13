@@ -12,6 +12,7 @@ const registerRouter = require(`./routes/register`);
 const searchRouter = require(`./routes/search`);
 const categoriesRouter = require(`./routes/categories`);
 const axios = require(`axios`);
+const {HttpCode} = require(`../service/utils/_constants`);
 
 const DEFAULT_PORT = `8000`;
 const PUBLIC_DIR = `public`;
@@ -39,7 +40,7 @@ app.get(`/`, async (req, res) => {
     return res.render(`index`, result);
 
   } catch (error) {
-    return res.statusCode(req.statusCode).send(`Something goes wrong, try again later`);
+    return res.statusCode(HttpCode.BAD_REQUEST).send(`Something goes wrong, try again later`);
   }
 });
 
