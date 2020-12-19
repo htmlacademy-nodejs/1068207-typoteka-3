@@ -36,8 +36,6 @@ articlesRouter.post(`/add`, upload.single(`picture`), async (req, res) => {
   newPost.picture = (file && file.filename) || ``;
   newPost.categories = (newPost.categories && newPost.categories.filter(Boolean)) || [];
 
-  console.log(body.categories);
-
   try {
     await axios.post(`${process.env.API_URI}/api/articles`, newPost);
     return res.redirect(`/my`);
